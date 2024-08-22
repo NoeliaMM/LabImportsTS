@@ -8,7 +8,7 @@ export const partida:Partida = {
 }
 
 export const min: number = 1;
-export const max: number = 12;
+export const max: number = 10;
 
 
 export type Estado =

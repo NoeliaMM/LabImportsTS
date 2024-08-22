@@ -1,4 +1,4 @@
-import {min,max,partida} from "./model";
+import {partida} from "./model";
 import {mostrarMensaje,gestionarFin,muestraCarta,muestraPuntuacion} from "./ui";
 
 export const finalizarPartida = () => {
@@ -33,12 +33,13 @@ export const comprobarPuntuacion = (): void => {
   gestionarFin();
 };
 
-const calcularNumeroAleatorio = ():number => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+// const calcularNumeroAleatorio = ():number => {
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// };
 
-const calcularNumeroCarta = (numeroAleatorio: number) => {
-  if (numeroAleatorio > 7 && numeroAleatorio < 10) {
+const calcularNumeroCarta = () => {
+ const numeroAleatorio= Math.floor(Math.random() * 10) + 1;
+  if (numeroAleatorio > 7) {
     return numeroAleatorio + 2;
   }
   return numeroAleatorio;
@@ -97,12 +98,11 @@ const actualizarPuntos = (puntosActuales: number) => {
 };
 
 export const dameCarta = (): void => {
-  const numeroAleatorio = calcularNumeroAleatorio();
-  if(partida.cartasGastadas.includes(numeroAleatorio)){
+  const carta = calcularNumeroCarta();
+  if(partida.cartasGastadas.includes(carta)){
     dameCarta();
   }else{
-    partida.cartasGastadas.push(numeroAleatorio);
-    const carta = calcularNumeroCarta(numeroAleatorio);
+    partida.cartasGastadas.push(carta);    
     const urlCarta = obtenerUrlCarta(carta);
     muestraCarta(urlCarta);
     const puntosCarta = obtenerPuntosCarta(carta);
