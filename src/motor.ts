@@ -33,10 +33,6 @@ export const comprobarPuntuacion = (): void => {
   gestionarFin();
 };
 
-// const calcularNumeroAleatorio = ():number => {
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// };
-
 const calcularNumeroCarta = () => {
  const numeroAleatorio= Math.floor(Math.random() * 10) + 1;
   if (numeroAleatorio > 7) {
