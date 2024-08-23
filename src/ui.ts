@@ -1,4 +1,12 @@
 import {Estado,partida} from "./model";
+import {
+calcularNumeroCarta,
+actualizarPuntos,
+obtenerPuntosCarta,
+obtenerUrlCarta,
+sumarPuntos,
+obtenerEstadoPartida
+} from "./motor";
 
 export const mostrarMensaje = (estado: Estado) => {
   let mensaje = "";
@@ -103,3 +111,31 @@ export const iniciarPartida =()=>{
   partida.puntos=0;
   partida.cartasGastadas=[];  
 }
+
+
+export const comprobarPuntuacion = (): void => {
+
+  const estadoPartida : Estado = obtenerEstadoPartida(partida.puntos);
+
+  mostrarMensaje(estadoPartida);
+
+  gestionarFin();
+};
+
+export const dameCarta = (): void => {
+  const carta = calcularNumeroCarta();
+  if(partida.cartasGastadas.includes(carta)){
+    dameCarta();
+  }else{
+    partida.cartasGastadas.push(carta);    
+    const urlCarta = obtenerUrlCarta(carta);
+    muestraCarta(urlCarta);
+    const puntosCarta = obtenerPuntosCarta(carta);
+    const puntosSumados = sumarPuntos(puntosCarta);
+    actualizarPuntos(puntosSumados);
+    muestraPuntuacion();
+    if (partida.puntos >= 7.5) {
+      comprobarPuntuacion();
+    }
+  }
+};

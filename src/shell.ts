@@ -1,5 +1,4 @@
-import {comprobarPuntuacion, dameCarta} from "./motor";
-import { iniciarPartida } from "./ui";
+import { iniciarPartida,comprobarPuntuacion, dameCarta } from "./ui";
 
 document.addEventListener("DOMContentLoaded", iniciarPartida);
 
@@ -20,5 +19,3 @@ if (
 ) {
   btnPararPartida.addEventListener("click", comprobarPuntuacion);
 }
-
-

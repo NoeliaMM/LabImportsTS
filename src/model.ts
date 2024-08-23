@@ -17,5 +17,6 @@ export type Estado =
   | "CASI"
   | "CLAVADO"
   | "PASADO"
-  | "GAME_OVER";
+  | "GAME_OVER"
+  | "POR_DEBAJO";
 

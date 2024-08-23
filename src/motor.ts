@@ -1,39 +1,7 @@
-import {partida} from "./model";
-import {mostrarMensaje,gestionarFin,muestraCarta,muestraPuntuacion} from "./ui";
+import {partida, Estado} from "./model";
 
-export const finalizarPartida = () => {
-  if (partida.puntos === 7.5) {
-    mostrarMensaje("CLAVADO");
-  }
 
-  if (partida.puntos > 7.5) {
-    mostrarMensaje("PASADO");
-  }
-
-  gestionarFin();
-};
-
-export const comprobarPuntuacion = (): void => {
-  if (partida.puntos === 7.5) {
-    mostrarMensaje("CLAVADO");
-  }
-  if (partida.puntos <= 4) {
-    mostrarMensaje("CONSERVADOR");
-  }
-  if (partida.puntos > 4 && partida.puntos <= 5) {
-    mostrarMensaje("CANGUELO");
-  }
-  if (partida.puntos > 5 && partida.puntos <= 7.5) {
-    mostrarMensaje("CASI");
-  }
-  if (partida.puntos > 7.5) {
-    mostrarMensaje("PASADO");
-  }
-
-  gestionarFin();
-};
-
-const calcularNumeroCarta = () => {
+export const calcularNumeroCarta = () => {
  const numeroAleatorio= Math.floor(Math.random() * 10) + 1;
   if (numeroAleatorio > 7) {
     return numeroAleatorio + 2;
@@ -41,7 +9,7 @@ const calcularNumeroCarta = () => {
   return numeroAleatorio;
 };
 
-const obtenerUrlCarta = (carta: number) => {
+export const obtenerUrlCarta = (carta: number) => {
   switch (carta) {
     case 1:
       return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg";
@@ -78,36 +46,40 @@ const obtenerUrlCarta = (carta: number) => {
   }
 };
 
-const obtenerPuntosCarta = (carta: number) => {
+export const obtenerPuntosCarta = (carta: number) => {
   if (carta > 7) {
     return 0.5;
   }
   return carta;
 };
 
-const sumarPuntos = (puntuacion: number) => {
+export const sumarPuntos = (puntuacion: number) => {
   return partida.puntos + puntuacion;
 };
 
-const actualizarPuntos = (puntosActuales: number) => {
+export const actualizarPuntos = (puntosActuales: number) => {
   partida.puntos = puntosActuales;
 };
 
-export const dameCarta = (): void => {
-  const carta = calcularNumeroCarta();
-  if(partida.cartasGastadas.includes(carta)){
-    dameCarta();
-  }else{
-    partida.cartasGastadas.push(carta);    
-    const urlCarta = obtenerUrlCarta(carta);
-    muestraCarta(urlCarta);
-    const puntosCarta = obtenerPuntosCarta(carta);
-    const puntosSumados = sumarPuntos(puntosCarta);
-    actualizarPuntos(puntosSumados);
-    muestraPuntuacion();
-    if (partida.puntos >= 7.5) {
-      finalizarPartida();
-    }
+export const obtenerEstadoPartida=(puntos:number): Estado =>{
+
+  if (puntos === 7.5) {
+    return "CLAVADO";
   }
-};
+  if (puntos <= 4) {
+    return "CONSERVADOR";
+  }
+  if (puntos > 4 && puntos <= 5) {
+    return "CANGUELO";
+  }
+  if (puntos > 5 && puntos <= 7.5) {
+    return "CASI";
+  }
+  if (puntos > 7.5) {
+    return "PASADO";
+  }
+  return "POR_DEBAJO";
+}
+
+
 
